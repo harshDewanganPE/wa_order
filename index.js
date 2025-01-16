@@ -2,7 +2,7 @@ const express=require("express");
 const body_parser=require("body-parser");
 const axios=require("axios");
 require('dotenv').config();
-
+const cors = require('cors');
 const app=express().use(body_parser.json());
 
 const token=process.env.TOKEN;
@@ -12,12 +12,18 @@ app.listen(8000||process.env.PORT,()=>{
     console.log("webhook is listening");
 });
 
+app.use(cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+}));
+
 //to verify the callback url from dashboard side - cloud api side
 app.get("/webhook",(req,res)=>{
    let mode=req.query["hub.mode"];
    let challange=req.query["hub.challenge"];
    let token=req.query["hub.verify_token"];
- 
 
     if(mode && token){
         if(mode==="subscribe" && token===mytoken){
@@ -70,6 +76,7 @@ app.post("/webhook",(req,res)=>{ //i want some
     }
 
 });
+
 
 app.get("/",(req,res)=>{
     res.status(200).send("hello this is webhook setup");
