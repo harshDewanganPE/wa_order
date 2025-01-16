@@ -4,7 +4,7 @@ require("dotenv").config();
 const token = process.env.TOKEN;
 const mytoken = process.env.MYTOKEN;
 
-const Start = (req, res) => {
+const Start = async (req, res) => {
   let body_param = req.body;
 
   console.log(JSON.stringify(body_param, null, 2));
@@ -49,11 +49,39 @@ const Start = (req, res) => {
             messaging_product: "whatsapp",
             to: from,
             recipient_type: "individual",
-            type: "image",
-            image: {
-              link: "https://assets.pharmeasy.in/web-assets/about_us/mainCarousel_01.jpg?dim=640x640&q=75",
-              caption:
-                "Hi, Welcome to PharmEasy. Please help us with your delivery pincode to proceed and place your order.",
+            // type: "image",
+            // image: {
+            //   link: "https://assets.pharmeasy.in/web-assets/about_us/mainCarousel_01.jpg?dim=640x640&q=75",
+            //   caption:
+            //     "Hi, Welcome to PharmEasy. Please help us with your delivery pincode to proceed and place your order.",
+            // },
+            type: "interactive",
+
+            interactive: {
+              type: "button",
+              header: {
+                type: "image",
+                image: {
+                  link: "https://assets.pharmeasy.in/web-assets/about_us/mainCarousel_01.jpg?dim=640x640&q=75",
+                },
+              },
+              body: {
+                text: "Hi, Welcome to PharmEasy. Please help us with your delivery pincode to proceed and place your order.",
+              },
+              footer: {
+                text: "Please provide your pincode number to check availability.",
+              },
+              action: {
+                buttons: [
+                  {
+                    type: "reply",
+                    reply: {
+                      id: "change-button",
+                      title: "Enter Pincode",
+                    },
+                  },
+                ],
+              },
             },
           },
           headers: {
@@ -74,7 +102,7 @@ const Start = (req, res) => {
             messaging_product: "whatsapp",
             to: from,
             text: {
-              body: "Thanks to reaching us Please type \"Hi\" to begin a new chat",
+              body: 'Thanks to reaching us Please type "Hi" to begin a new chat',
             },
           },
           headers: {
