@@ -74,7 +74,7 @@ const Start = (req, res) => {
             messaging_product: "whatsapp",
             to: from,
             text: {
-              body: "Thanks to reaching us Please type to begin a new chat",
+              body: "Thanks to reaching us Please type \"Hi\" to begin a new chat",
             },
           },
           headers: {
